@@ -1,0 +1,54 @@
+.profile-conatiner{
+     width: 100%;
+     height: 100%;
+     display: flex;
+     flex-direction: column;
+}
+
+.profile-title{
+     font-size: 28px;
+     padding: 25px 20px;
+     text-align: left;
+}
+
+.profile-info-container{
+     margin: 0 50px;
+     margin-top: 10px;
+}
+
+.profile-info-container table tbody tr td{
+     font-size: 20px;
+     padding: 5px 10px;
+     text-align: left;
+}
+
+.info-footer{
+     width: 100%;
+     padding: 30px;
+     margin-top: 60px;
+     text-align: right;
+}
+
+.info-footer .logout-btn-holder .logout-btn{
+     padding: 7px 10px;
+     border-radius: 7px;
+     border: none;
+     cursor: pointer;
+     font-weight: bold;
+}
+
+.info-footer .logout-btn-holder .logout-btn:hover{
+     opacity: 0.5;
+}
+
+.info-footer .logout-btn-holder .logout-btn span{
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 100px;
+}
+
+.info-footer .logout-btn-holder .logout-btn span svg {
+     width: 25px;
+     height: 25px;
+}

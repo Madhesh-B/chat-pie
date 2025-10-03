@@ -1,0 +1,19 @@
+.info-container{
+     position: absolute;
+     padding: 5px; 
+     left: 13rem;
+     top: 10px;
+     background: #2d2d2d;
+     border-radius: 10px;
+}
+
+.option{
+     color: aliceblue;
+     padding: 10px; 
+     cursor: pointer;
+     border-radius: 5px;
+}
+
+.option:hover {
+     background: #00ddff;
+}

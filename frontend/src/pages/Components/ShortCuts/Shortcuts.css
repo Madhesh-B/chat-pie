@@ -1,0 +1,129 @@
+.shortcut-info-window {
+     width: 100svw;
+     height: 100svh;
+     background: transparent;
+     backdrop-filter: blur(10px);
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     align-content: center;
+     position: absolute;
+     top: 0;
+     left: 0;
+     overflow: hidden;
+     z-index: 999;
+}
+
+.shortcut-info-container {
+     width: 25rem;
+     height: 13rem;
+     margin: 0 auto;
+     background: #3d3c3c;
+     color: aliceblue;
+     border-radius: 10px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+     display: flex;
+     flex-direction: column;
+     gap: 2rem;
+     padding: 1rem;
+     user-select: none;
+     -webkit-user-drag: none;
+     animation: come 1s ease-in-out 1;
+}
+
+.shortcut-info-container-go{
+     animation: come 1s ease-in-out 1 reverse;
+}
+
+.shortcut-info-title{
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+}
+
+.shortcut-info-title span{
+     font-size: 2rem;
+     font-weight: 600;
+     border-bottom: 2px solid #c0bebe;
+}
+
+.shortcut-info-title svg{
+     cursor: pointer;
+     color: #c0bebe;
+     transition: color 0.3s ease;
+}
+
+.shortcut-info-title svg:hover{
+     color: #ffffff;
+}
+
+.shortcut-info-list {
+     display: flex;
+     height: 4rem;
+     flex-direction: column;
+     gap: 0.5rem;
+}
+
+.shortcut-info-list table {
+     width: 100%;
+     border-collapse: collapse;
+     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+     border-radius: 10px;
+}
+
+.shortcut-info-list table tbody tr:nth-child(even) {
+     background: #4a4848;
+     border-bottom-left-radius: 10px;
+}
+
+.shortcut-info-list table tbody tr:last-child {
+     border-bottom-right-radius: 10px;
+}
+
+.shortcut-info-list table thead tr th {
+     width: 50%;
+     text-align: center;
+     font-size: 1.2rem;
+     background: #c0bebe;
+     color: #3d3c3c;
+}
+
+.shortcut-info-list table thead tr th:first-child {
+     border-right: 1px solid #3d3c3c;
+     border-top-left-radius: 10px;
+}
+
+.shortcut-info-list table thead tr th:last-child {
+     border-top-right-radius: 10px;
+}
+
+.shortcut-info-list table tbody tr td {
+     text-align: center;
+     font-size: 1rem;
+     padding: 10px 0;
+}
+
+.shortcut-info-list table tbody tr td:first-child {
+     border-right: 1px solid #c0bebe;
+}
+
+.shortcut-info-list table tbody tr td code {
+     font-size: large;
+     border-top-right-radius: 10px;
+}
+
+.cancel-btn {
+     width: 2rem;
+     height: 2rem;
+}
+
+@keyframes come {
+     from{
+          transform: translateY(500px);
+     }
+
+     to{
+          transform: translateY(0);
+     }
+     
+}

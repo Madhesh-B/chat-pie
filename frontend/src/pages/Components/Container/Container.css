@@ -1,0 +1,19 @@
+.screen{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.container{
+     width: 30rem;
+     color: aliceblue;
+     background-color: rgba(220, 192, 192, 0.146);
+     backdrop-filter: blur(10px);
+     border: 1px solid rgba(255, 255, 255, 0.18);
+     border-radius: 10px;
+     box-sizing: border-box;
+     padding: 2rem;
+}

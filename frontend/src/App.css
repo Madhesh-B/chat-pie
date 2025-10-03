@@ -1,0 +1,9 @@
+#root {
+  width: 100svw;
+  min-height: 100svh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

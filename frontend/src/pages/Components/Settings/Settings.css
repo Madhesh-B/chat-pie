@@ -1,0 +1,74 @@
+.settings-window {
+     width: 100svw;
+     height: 100svh;
+     color: aliceblue;
+     background: transparent;
+     backdrop-filter: blur(10px);
+     display: flex;
+     align-content: center;
+     position: absolute;
+     top: 0;
+     left: 0;
+     overflow: hidden;
+     z-index: 1000;
+}
+
+.settings-container {
+     box-sizing: border-box;
+     width: 50rem;
+     height: 25rem;
+     margin-bottom: 10px;
+     border-radius: 10px;
+     background: #2d2d2d;
+     margin: 0 auto;
+     animation: come 1s ease-in-out 1;
+}
+
+.settings-header {
+     width: 100%;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+}
+
+.settings-header .settings-title {
+     font-size: 28px;
+     margin: 1rem;
+}
+
+.settings-header svg {
+     width: 2rem;
+     height: 2rem;
+     margin: 10px;
+     cursor: pointer;
+}
+
+.settings-hr{
+     width: 95%;
+     margin: 0 auto;
+}
+
+.settings-display{
+     width: 100%;
+     display: flex;
+     align-items: start;
+}
+
+.options-container {
+     width: 10rem;
+     padding: 10px;
+     background: transparent;
+     overflow-x: hidden;
+     overflow-y: auto;
+}
+
+.selected{
+     background: #3b3c3c;
+}
+
+.settings-info-container {
+     width: 40rem;
+     height: 20.5rem;
+     border-left: 1px solid #7e7d7d;
+     border-bottom-right-radius: 10px;
+}
