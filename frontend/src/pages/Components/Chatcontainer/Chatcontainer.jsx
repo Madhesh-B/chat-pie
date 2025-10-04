@@ -19,6 +19,7 @@ const Chatcontainer = (props) => {
   const [info, setinfo] = useState("");
   const [heightStyle, setHeightStyle] = useState({});
   const [credientials, setCredientials] = useState({});
+  const [memberCount , setMemberCount] = useState(1);
 
   useEffect(() => {
     const localStorageCrediendials = JSON.parse(localStorage.getItem("user"));
@@ -112,6 +113,18 @@ const Chatcontainer = (props) => {
       socket.off("recieve_message", handleMessage);
     };
   }, []);
+  
+  useEffect(() => {
+    const handleMessage = (data) => {
+      setMemberCount(data);
+    };
+
+    socket.on("update_user_count", handleMessage);
+
+    return () => {
+      socket.off("update_user_count", handleMessage);
+    };
+  }, []);
 
   return isObjectEmpty(props.details) ? (
     <div className="no-chat-selected"></div>
@@ -122,7 +135,8 @@ const Chatcontainer = (props) => {
           <img src="/vite.svg" alt={props.details.contact} />
         </div>
         <div className="contact-name">
-          <span className="person-name">{props.details.person}</span>
+          <span className="person-name">{props.details.person}</span><br />
+          <span className="online-indicator" style={{color:"#fff" , fontSize:"12px"}}>{ memberCount } online</span>
         </div>
       </div>
       <div className="message-holder" ref={containerRef}>

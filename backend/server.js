@@ -20,33 +20,43 @@ const io = new Server(server, {
 const chatNamespace = io.of('chat');
 
 let chats = [
-    {
+  {
+    id: 1,
+    person: "Demo",
+    messages: {
       id: 1,
-      person: "Demo",
-      messages: {
-        id: 1,
-        chat: [
-          {
-            id: 1,
-            sendBy: "System",
-            message:
-              "This is the demo chat for you",
-          },
-        ],
-      },
+      chat: [
+        {
+          id: 1,
+          sendBy: "System",
+          message:
+            "This is the demo chat for you",
+        },
+      ],
     },
-  ];;
+  },
+];;
+
+let users = {};
 
 chatNamespace.on('connection', (socket) => {
   console.log('User connected');
+
+  users[socket.id] = { id: socket.id, name: "Anonymous" };
+  socket.emit('update_user_count', Object.keys(users).length);
+
   socket.emit('chat', chats);
 
   socket.on('message_send', (updatedChat) => {
-    socket.broadcast.emit('recieve_message' , updatedChat)
+    socket.broadcast.emit('recieve_message', updatedChat)
+    chats[0].messages.chat.push(updatedChat);
+    console.log(updatedChat.messages.chat);
   });
 
   socket.on('disconnect', () => {
-    console.log('User disconnected');
+    delete users[socket.id];
+    console.log('User disconnected' , Object.keys(users).length);
+    io.emit("user_count", Object.keys(users).length);
   });
 });
 

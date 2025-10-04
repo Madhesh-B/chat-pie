@@ -1,7 +1,6 @@
 import "./Home.css";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
 
 import Loading from "./../Components/Loading/Loading";
 import Info from "../Components/Info/Info";
@@ -33,6 +32,14 @@ const Home = () => {
   const [contactsList, SetContactsList] = useState([]); //for contacts list
 
   const navigate = useNavigate(); // for navigation
+
+  useEffect(() => {
+    if(!socket) return;
+
+    socket.on('connect' , (data) => {
+      setLoading(false);
+    })
+  })
 
   useEffect(() => {
     const auth = localStorage.getItem("user");
@@ -76,7 +83,7 @@ const Home = () => {
       };
       socket.on("chat", handleChat);
 
-      setLoading(false);
+      // setLoading(false);
 
       return () => {
         socket.off("chat", handleChat);
@@ -148,7 +155,7 @@ const Home = () => {
               />
             ))}
           </div>
-          <button className="add-btn">
+          <button className="add-btn" onClick={() => alert('This option is currently unavailable')}>
             <span className="plus-icon">+</span>
           </button>
         </div>
