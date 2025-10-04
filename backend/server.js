@@ -41,23 +41,8 @@ chatNamespace.on('connection', (socket) => {
   console.log('User connected');
   socket.emit('chat', chats);
 
-  socket.on('sendmsg', (updatedChat) => {
-    const newMessages = Array.isArray(updatedChat.messages)
-      ? updatedChat.messages
-      : [updatedChat.messages];
-
-    chats = chats.map((chat) => {
-      if (chat.id === updatedChat.id) {
-        return {
-          ...chat,
-          messages: [...chat.messages, ...newMessages.slice(chat.messages.length)],
-        };
-      }
-      return chat;
-    });
-
-    chatNamespace.emit('updateChat', chats);
-    console.log('Updated chat messages:', chats[0].messages);
+  socket.on('message_send', (updatedChat) => {
+    socket.broadcast.emit('recieve_message' , updatedChat)
   });
 
   socket.on('disconnect', () => {
