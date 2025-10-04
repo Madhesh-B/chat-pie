@@ -9,80 +9,47 @@ import Chatbox from "./../Components/Chatbox/Chatbox";
 import Chatcontainer from "../Components/Chatcontainer/Chatcontainer";
 import Shortcuts from "../Components/ShortCuts/Shortcuts";
 import Settings from "../Components/Settings/Settings";
+import Socket from "./../../Socket";
+
+const socket = Socket;
 
 const Home = () => {
-  const [socketio, setsocketio] = useState(null);
+  const [LoadingStatus, setLoading] = useState(true); //for loading state
 
-  const navigate = useNavigate();
+  const [message, setMessage] = useState({}); //for message holder
 
-  useEffect(() => {
-    try {
-      const socket = io.connect("http://localhost:3000/chat");
-      setsocketio(socket);
-    } catch (e) {
-      console.log("server is not available");
-    }
-  }, []);
+  const BG = useRef(null); //for bg reference
+
+  const [className, setClassName] = useState("window-container Dark"); //for class theme
+
+  const [shortcutAppear, setShortcutAppear] = useState(false); //for shortcut toggle
+
+  const [theme, setTheme] = useState("Light"); // for theme
+
+  const [themeTurn, setThemeTurn] = useState("off"); //for theme toggle
+
+  const [settingsAppear, setSettingsAppear] = useState(false); //for toggle settings appearence
+
+  const [contactsList, SetContactsList] = useState([]); //for contacts list
+
+  const navigate = useNavigate(); // for navigation
 
   useEffect(() => {
     const auth = localStorage.getItem("user");
     if (!auth) {
       navigate("/login");
     }
-  }, []);
-  {
-    /* for authentication check */
-  }
-
-  const [LoadingStatus, setLoading] = useState(true);
-  {
-    /* for loading state */
-  }
-
-  const [message, setMessage] = useState({});
-  {
-    /* for message holder */
-  }
-
-  const BG = useRef(null);
-  {
-    /* for bg reference */
-  }
-
-  const [className, setClassName] = useState("window-container Dark");
-  {
-    /* for class theme */
-  }
-
-  const [shortcutAppear, setShortcutAppear] = useState(false);
-  {
-    /* for shortcut toggle */
-  }
+  }, []); // for authentication check
 
   useEffect(() => {
     document.title = "Chat Pie";
   }, []);
-
-  const [theme, setTheme] = useState("Light");
-  {
-    /* for theme */
-  }
 
   useEffect(() => {
     setClassName(
       theme === "Image" ? "window-container Image" : "window-container Dark"
     );
   }, [theme]);
-
-  const [themeTurn, setThemeTurn] = useState("off");
-  {
-    /* for theme toggle */
-  }
-
-  const [settingsAppear, setSettingsAppear] = useState(false);
-  {
-    /* for toggle settings appearence */
-  }
 
   let items = [
     {
@@ -101,27 +68,31 @@ const Home = () => {
       },
     },
   ];
-  const [contactsList, SetContactsList] = useState([]);
-  {
-    /* for contacts list */
-  }
 
   function fetchData() {
     try {
-      const credientials = localStorage.getItem("user");
-      socketio.on("chat", (data) => {
+      const handleChat = (data) => {
         SetContactsList(data);
-      });
+      };
+      socket.on("chat", handleChat);
+
       setLoading(false);
+
+      return () => {
+        socket.off("chat", handleChat);
+      };
     } catch (e) {
       console.log(e);
       SetContactsList(items);
       setLoading(false);
+      return () => {};
     }
   }
+
   useEffect(() => {
-    fetchData();
-  }, [socketio]);
+    const cleanup = fetchData();
+    return cleanup;
+  }, []);
 
   function handleSendMessage(newObj) {
     SetContactsList((prev) =>
@@ -129,6 +100,7 @@ const Home = () => {
     );
     setMessage(newObj);
   }
+
   return (
     <>
       <Loading appear={LoadingStatus} />

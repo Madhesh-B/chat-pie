@@ -2,6 +2,10 @@ import "./Chatcontainer.css";
 import Me from "./../Me/Me";
 import Others from "./../Others/Others";
 import { useRef, useState, useEffect } from "react";
+import Socket from "./../../../Socket";
+
+const socket = Socket;
+
 function isObjectEmpty(obj) {
   if (obj === null || typeof obj !== "object") {
     return false;
@@ -14,14 +18,20 @@ const Chatcontainer = (props) => {
   const containerRef = useRef(null);
   const [info, setinfo] = useState("");
   const [heightStyle, setHeightStyle] = useState({});
+  const [credientials, setCredientials] = useState({});
+
+  useEffect(() => {
+    const localStorageCrediendials = JSON.parse(localStorage.getItem("user"));
+    setCredientials(localStorageCrediendials);
+  }, []);
 
   useEffect(() => {
     if (info.includes("\n")) {
-      setHeightStyle({ height: "20%" , transform:'translateY(-10px)'});
-    }else{
+      setHeightStyle({ height: "20%", transform: "translateY(-10px)" });
+    } else {
       setHeightStyle({});
     }
-  } , [info]);
+  }, [info]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -46,24 +56,10 @@ const Chatcontainer = (props) => {
     }
   }, [props.details]);
 
-  function OnEnterBtn(e) {
-    if (e.shiftKey && e.key === "Enter") {
-      e.preventDefault();
-      ref.current.value += "\n";
-    } else if (e.key === "Enter" && ref.current.value !== "" && !e.shiftKey) {
-      props.sendMessage(addMessage(ref.current.value));
-      e.preventDefault();
-      ref.current.value = "";
-      setinfo("");
-    }
-  }
-
-  function addMessage(currMessage) {
-    const credientials = JSON.parse(localStorage.getItem("user"));
-    console.log(credientials);
+  function addMessage(currMessage, sender) {
     let tempMessage = {
       id: props.details.messages.chat.length + 1,
-      sendBy: credientials.username,
+      sendBy: sender,
       message: currMessage,
     };
     let newObj = {
@@ -75,6 +71,47 @@ const Chatcontainer = (props) => {
     };
     return newObj;
   }
+
+  function send() {
+    if (!ref.current.value.trim()) return; // prevent empty msg
+
+    const newMessage = addMessage(ref.current.value, credientials.username);
+    props.sendMessage(newMessage);
+    socket.emit("message_send", newMessage);
+    ref.current.value = "";
+    setinfo("");
+    console.log("msgsent");
+  }
+
+  function OnEnterBtn(e) {
+    if (e.shiftKey && e.key === "Enter") {
+      e.preventDefault();
+      ref.current.value += "\n";
+    } else if (e.key === "Enter" && ref.current.value !== "" && !e.shiftKey) {
+      const msg = addMessage(ref.current.value, credientials.username);
+      props.sendMessage(msg);
+      e.preventDefault();
+      socket.emit("message_send", msg);
+      console.log("msgsent");
+      ref.current.value = "";
+      setinfo("");
+    }
+  }
+
+  // sockets
+
+  useEffect(() => {
+    const handleMessage = (data) => {
+      console.log("Received on client:", data);
+      props.sendMessage(data);
+    };
+
+    socket.on("recieve_message", handleMessage);
+
+    return () => {
+      socket.off("recieve_message", handleMessage);
+    };
+  }, []);
 
   return isObjectEmpty(props.details) ? (
     <div className="no-chat-selected"></div>
@@ -110,11 +147,7 @@ const Chatcontainer = (props) => {
         ></textarea>
         <button
           className="send-btn"
-          onClick={() =>
-            ref.current.value !== ""
-              ? props.sendMessage(addMessage(ref.current.value))
-              : ""
-          }
+          onClick={() => (ref.current.value !== "" ? send() : "")}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
