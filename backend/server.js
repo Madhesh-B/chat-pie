@@ -66,5 +66,5 @@ app.post('/users', (req, res) => {
 
 const PORT = 3000;
 server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port : ${PORT}`);
 });
