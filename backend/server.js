@@ -41,26 +41,25 @@ let users = {};
 
 chatNamespace.on('connection', (socket) => {
   console.log('User connected');
-
   users[socket.id] = { id: socket.id, name: "Anonymous" };
+  socket.broadcast.emit('update_user_count', Object.keys(users).length);
   socket.emit('update_user_count', Object.keys(users).length);
 
   socket.emit('chat', chats);
 
   socket.on('message_send', (updatedChat) => {
-    socket.broadcast.emit('recieve_message', updatedChat)
-    chats[0].messages.chat.push(updatedChat);
-    console.log(updatedChat.messages.chat);
+    socket.broadcast.emit('recieve_message', updatedChat);
+    chats = [updatedChat];
   });
 
   socket.on('disconnect', () => {
     delete users[socket.id];
-    console.log('User disconnected' , Object.keys(users).length);
-    io.emit("user_count", Object.keys(users).length);
+    console.log('User disconnected', Object.keys(users).length);
+    socket.broadcast.emit("user_count", Object.keys(users).length);
   });
 });
 
-app.get('/users', (req, res) => {
+app.post('/users', (req, res) => {
   res.json(chats);
   console.log('Data sent!');
 });

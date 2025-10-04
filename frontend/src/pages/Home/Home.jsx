@@ -80,6 +80,8 @@ const Home = () => {
     try {
       const handleChat = (data) => {
         SetContactsList(data);
+        console.log("Data recieved" , data);
+        setLoading(false);
       };
       socket.on("chat", handleChat);
 

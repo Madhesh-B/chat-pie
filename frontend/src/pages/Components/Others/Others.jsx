@@ -8,6 +8,7 @@ const Others = ({ message , sender }) => {
           <div className="senders-info-other">
             <span className="sender-name-other">{sender}</span>
           </div>
+          {console.log(message)}
           <div className="user-msg-other">{message}</div>
         </div>
       </div>

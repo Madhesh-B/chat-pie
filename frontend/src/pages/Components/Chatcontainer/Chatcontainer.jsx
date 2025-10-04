@@ -142,6 +142,7 @@ const Chatcontainer = (props) => {
       <div className="message-holder" ref={containerRef}>
         {props.details.messages.chat.map((msg) => {
           const credientials = JSON.parse(localStorage.getItem("user"));
+          console.log(msg);
           return msg.sendBy == credientials.username ? (
             <Me message={msg.message} key={msg.id} />
           ) : (
