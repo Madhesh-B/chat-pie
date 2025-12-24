@@ -1,16 +1,36 @@
-# React + Vite
+# Chat Pie 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
+Chat Pie is a real-time group messaging application that allows users to communicate through public and private chat rooms. Users can create password-protected rooms to ensure secure and private conversations. The application focuses on simplicity, security, and smooth real-time interaction.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- Real-time group messaging
+- Create public chat rooms
+- Create private chat rooms with password protection
+- Secure access to private rooms
+- User-friendly and responsive UI
+- Smooth navigation between pages
+- Scalable room-based chat architecture
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## How It Works
+1. Users can join the application and view available public chat rooms.
+2. To create a private room, the user sets a room name and password.
+3. Only users with the correct password can join private rooms.
+4. Messages sent in a room are instantly visible to all participants in that room.
+5. Users can switch between rooms seamlessly.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tech Stack
+- **Frontend:** React
+- **Backend:** Node.js, Express.js
+- **Real-time Communication:** Socket.IO
+
+---
+
+## Author
+**Madhesh B**
